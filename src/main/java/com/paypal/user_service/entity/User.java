@@ -1,10 +1,13 @@
-package entity;
+package com.paypal.user_service.entity;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "app_user")
-public class user {
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 
@@ -55,4 +58,5 @@ public class user {
         return role;
     }
 
+    //getter setters
 }
