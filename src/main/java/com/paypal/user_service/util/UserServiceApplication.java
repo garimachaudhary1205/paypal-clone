@@ -1,4 +1,4 @@
-package com.paypal.user_service;
+package com.paypal.user_service.util;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UserServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserServiceApplication.class, args);
+
+        SpringApplication.run(UserServiceApplication.class, args);
 	}
 
 }
