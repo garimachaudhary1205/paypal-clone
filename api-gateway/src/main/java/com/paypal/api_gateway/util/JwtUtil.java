@@ -8,7 +8,7 @@ import java.security.Key;
 
 public class JwtUtil {
 
-    private static final String SECRET = "secret123secret123secret123secret12";
+    private static final String SECRET = "secret123secret123secret123secret123secret123secret123";
 
     private static Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
