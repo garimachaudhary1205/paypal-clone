@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PayPal Clone - User Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #0070ba;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005ea6;
+        }
+        pre {
+            background-color: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 200px;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Login & Get User Info</h2>
+
+    <label>Email:</label>
+    <input type="text" id="email" placeholder="Email">
+
+    <label>Password:</label>
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+    <button onclick="getUser()">Get User Info</button>
+
+    <h3>Output:</h3>
+    <pre id="output"></pre>
+</div>
+
+<script>
+    let token = '';
+
+    function login() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        fetch('http://localhost:8080/auth/login', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({email, password})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.token) {
+                token = data.token;
+                document.getElementById('output').textContent = "✅ Logged in!\nToken:\n" + token;
+            } else {
+                document.getElementById('output').textContent = "❌ Login failed:\n" + JSON.stringify(data);
+            }
+        })
+        .catch(err => console.error(err));
+    }
+
+    function getUser() {
+        if (!token) {
+            alert("Please login first!");
+            return;
+        }
+
+        fetch('http://localhost:8080/api/users/me', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('output').textContent = "✅ User Info:\n" + JSON.stringify(data, null, 2);
+        })
+        .catch(err => console.error(err));
+    }
+</script>
+</body>
+</html>
