@@ -16,68 +16,79 @@ Kafka	Event-driven communication between services
 🏗 Tech Stack
 
 Java 17
+
 Spring Boot 3+
+
 Spring Security + JWT
+
 Spring Cloud (OpenFeign, Gateway)
+
 Spring Kafka
+
 Spring Data JPA / Hibernate
+
 MySQL / H2
+
 Docker Compose
+
 Lombok
+
 Maven
 
 🔥 Core Features
 ✅ User Service:
+
 Register/Login with encrypted passwords
+
 JWT Token generation
+
 Validate tokens inside other services via Feign Client
 
 ✅ Wallet Service:
+
 Create wallet for user
+
 Add money (credit)
+
 Pay money (debit)
+
 Payment Hold Funding + Capture workflow
+
 Scheduler to auto-expire unused holds
 
 ✅ Transaction Service:
+
 Save transaction records
+
 Fetch user transaction history
+
 Verify authenticity using JWT
 
 ✅ Reward Service:
+
 Points earned on transactions
+
 Bonus points on certain conditions
+
 Kafka consumer for "transaction-success" events
 
 ✅ Notification Service:
+
 Kafka consumer for sending notifications
+
 Email/SMS template structure
 
 ✅ API Gateway:
+
 Token validation
+
 Routes requests to respective microservices
+
 Central entry point of the whole system
 
 🧱 Architecture Overview
-                ┌────────────────┐
-                │  API Gateway   │
-                └───────┬────────┘
-                        │
- ┌──────────────────────────────────────────────────────────┐
- │              Internal Microservices Network              │
- │                                                          │
- │   ┌──────────┐    ┌───────────┐    ┌──────────────┐     │
- │   │ User     │    │ Wallet     │    │ Transaction  │     │
- │   │ Service  │    │ Service    │    │ Service      │     │
- │   └────┬─────┘    └─────┬─────┘    └──────┬───────┘     │
- │        │                │                  │             │
- │   JWT  │          Wallet Events        Txn Events        │
- │        ▼                ▼                  ▼             │
- │   ┌──────────┐    ┌───────────┐    ┌──────────────┐     │
- │   │ Reward   │    │ Notify     │    │ Others        │     │
- │   └──────────┘    └───────────┘    └──────────────┘     │
- │                                                          │
- └──────────────────────────────────────────────────────────┘
+              <img width="822" height="697" alt="image" src="https://github.com/user-attachments/assets/52d5d947-4ef8-4a34-a171-374a5b4e2948" />
+
  
               Kafka ←──────────── Event Bus ───────────→ Kafka
 
